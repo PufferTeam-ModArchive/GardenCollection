@@ -1,0 +1,46 @@
+[
+	{
+		"modid": "GardenContainers",
+		"name": "Garden Containers",
+		"description": "A variety of containers for planting vegetation.",
+		"version": "${modVersion}",
+		"credits": "By jaquadro",
+		"logoFile": "",
+		"url": "http://www.jaquadro.com/",
+		"authors": [ "jaquadro" ],
+		"dependencies": [ "AgriCraft" ],
+		"useDependencyInformation": "true"
+    },
+	{
+		"modid": "GardenCore",
+		"name": "Garden Core",
+		"description": "Base mod for a collection of garden and plant mods.",
+		"version": "${modVersion}",
+		"credits": "By jaquadro",
+		"logoFile": "",
+		"url": "http://www.jaquadro.com/",
+		"authors": [ "jaquadro" ]
+	},
+	{
+		"modid": "GardenStuff",
+		"name": "Garden Stuff",
+		"description": "Decorative blocks and miscellaneous things for gardens and more.",
+		"version": "${modVersion}",
+		"credits": "By jaquadro",
+		"logoFile": "",
+		"url": "http://www.jaquadro.com/",
+		"authors": [ "jaquadro" ],
+		"dependencies": [ "Thaumcraft" ],
+		"useDependencyInformation": "true"
+	},
+	{
+		"modid": "GardenTrees",
+		"name": "Garden Trees",
+		"description": "Ornamental trees, posts, and fences.",
+		"version": "${modVersion}",
+		"credits": "By jaquadro",
+		"logoFile": "",
+		"url": "http://www.jaquadro.com/",
+		"authors": [ "jaquadro" ]
+    }
+]

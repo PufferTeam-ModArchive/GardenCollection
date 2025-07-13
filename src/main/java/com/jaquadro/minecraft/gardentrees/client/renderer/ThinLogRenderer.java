@@ -1,7 +1,10 @@
 package com.jaquadro.minecraft.gardentrees.client.renderer;
 
+import static net.minecraft.client.renderer.RenderBlocks.*;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.RenderBlocks.*;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.IBlockAccess;
 
@@ -12,7 +15,10 @@ import com.jaquadro.minecraft.gardentrees.block.BlockThinLog;
 import com.jaquadro.minecraft.gardentrees.core.ClientProxy;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ThinLogRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
@@ -55,13 +61,14 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler {
         RenderBlocks renderer) {
         if (!(block instanceof BlockThinLog)) return false;
 
-        return renderWorldBlock(world, x, y, z, (BlockThinLog) block, modelId, renderer);
+        return this.renderWorldBlock(world, x, y, z, (BlockThinLog) block, modelId, renderer);
     }
 
     private boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, BlockThinLog block, int modelId,
         RenderBlocks renderer) {
         float margin = block.getMargin();
         int connectFlags = block.calcConnectionFlags(world, x, y, z);
+        boolean flag = false;
 
         boolean connectYNeg = (connectFlags & 1) != 0;
         boolean connectYPos = (connectFlags & 2) != 0;
@@ -75,13 +82,24 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler {
         boolean connectX = connectXNeg | connectXPos;
 
         if (!(connectYNeg && connectYPos) && !(connectZNeg && connectZPos) && !(connectXNeg && connectXPos)) {
-            if (connectY && !connectX && !connectZ) block.setOrientation(0);
-            else if (connectZ && !connectY && !connectX) block.setOrientation(1);
-            else if (connectX && !connectY && !connectZ) block.setOrientation(2);
-            else block.setOrientation(3);
+            if (connectY && !connectX && !connectZ) {
+                block.setOrientation(0);
+            } else if (connectZ && !connectY && !connectX) {
+                block.setOrientation(1);
+                renderer.uvRotateNorth = 1;
+                renderer.uvRotateSouth = 1;
+            } else if (connectX && !connectY && !connectZ) {
+                block.setOrientation(2);
+                renderer.uvRotateEast = 1;
+                renderer.uvRotateWest = 1;
+                renderer.uvRotateTop = 1;
+                renderer.uvRotateBottom = 1;
+            } else {
+                block.setOrientation(3);
+            }
 
             renderer.setRenderBounds(margin, margin, margin, 1 - margin, 1 - margin, 1 - margin);
-            renderer.renderStandardBlock(block, x, y, z);
+            flag = renderer.renderStandardBlock(block, x, y, z);
         }
 
         if (connectY) {
@@ -89,23 +107,29 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler {
             if (connectYNeg && connectYPos) renderer.setRenderBounds(margin, 0, margin, 1 - margin, 1, 1 - margin);
             else if (connectYNeg) renderer.setRenderBounds(margin, 0, margin, 1 - margin, margin, 1 - margin);
             else if (connectYPos) renderer.setRenderBounds(margin, 1 - margin, margin, 1 - margin, 1, 1 - margin);
-            renderer.renderStandardBlock(block, x, y, z);
+            flag = renderer.renderStandardBlock(block, x, y, z);
         }
 
         if (connectZ) {
             block.setOrientation(1);
+            renderer.uvRotateSouth = 1;
+            renderer.uvRotateNorth = 1;
             if (connectZNeg && connectZPos) renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, 1);
             else if (connectZNeg) renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, margin);
             else if (connectZPos) renderer.setRenderBounds(margin, margin, 1 - margin, 1 - margin, 1 - margin, 1);
-            renderer.renderStandardBlock(block, x, y, z);
+            flag = renderer.renderStandardBlock(block, x, y, z);
         }
 
         if (connectX) {
             block.setOrientation(2);
+            renderer.uvRotateEast = 1;
+            renderer.uvRotateWest = 1;
+            renderer.uvRotateTop = 1;
+            renderer.uvRotateBottom = 1;
             if (connectXNeg && connectXPos) renderer.setRenderBounds(0, margin, margin, 1, 1 - margin, 1 - margin);
             else if (connectXNeg) renderer.setRenderBounds(0, margin, margin, margin, 1 - margin, 1 - margin);
             else if (connectXPos) renderer.setRenderBounds(1 - margin, margin, margin, 1, 1 - margin, 1 - margin);
-            renderer.renderStandardBlock(block, x, y, z);
+            flag = renderer.renderStandardBlock(block, x, y, z);
         }
 
         block.setOrientation(0);
@@ -123,7 +147,7 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler {
 
                 // block.setBlockBounds(margin, -.0625f, margin, 1 - margin, 0, 1 - margin);
                 renderer.setRenderBounds(margin, yDiff, margin, 1 - margin, 1, 1 - margin);
-                renderer.renderStandardBlock(block, x, y - 1, z);
+                flag = renderer.renderStandardBlock(block, x, y - 1, z);
 
                 // IIcon sideIcon = block.getIcon(2, world.getBlockMetadata(x, y, z));
                 // renderer.renderFaceXNeg(block, x, y - 1, z, sideIcon);
@@ -135,7 +159,14 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler {
             }
         }
 
-        return true;
+        renderer.uvRotateSouth = 0;
+        renderer.uvRotateEast = 0;
+        renderer.uvRotateWest = 0;
+        renderer.uvRotateNorth = 0;
+        renderer.uvRotateTop = 0;
+        renderer.uvRotateBottom = 0;
+
+        return flag;
     }
 
     @Override

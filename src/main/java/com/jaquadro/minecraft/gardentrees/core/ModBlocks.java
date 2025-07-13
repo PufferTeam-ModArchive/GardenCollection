@@ -26,6 +26,8 @@ public class ModBlocks {
     public static BlockThinLogFence thinLogFenceBop;
     public static BlockThinLog thinLogThaumcraft;
     public static BlockThinLogFence thinLogFenceThaumcraft;
+    public static BlockThinLog thinLogWitchery;
+    public static BlockThinLogFence thinLogFenceWitchery;
     public static BlockFlowerLeaves flowerLeaves;
     public static BlockGTSapling sapling;
     public static BlockIvy ivy;
@@ -39,6 +41,8 @@ public class ModBlocks {
         thinLogFenceBop = new BlockThinLogFence(Constants.bopWoodTypes, "bop");
         thinLogThaumcraft = new BlockThinLog(Constants.thaumcraftWoodTypes, "thaumcraft");
         thinLogFenceThaumcraft = new BlockThinLogFence(Constants.thaumcraftWoodTypes, "thaumcraft");
+        thinLogWitchery = new BlockThinLog(Constants.witcheryWoodTypes, "witchery");
+        thinLogFenceWitchery = new BlockThinLogFence(Constants.witcheryWoodTypes, "witchery");
         flowerLeaves = new BlockFlowerLeaves(makeName("flowerLeaves"));
         sapling = new BlockGTSapling(makeName("sapling"));
         ivy = new BlockIvy(makeName("ivy"));
@@ -46,15 +50,26 @@ public class ModBlocks {
         candelilla = new BlockCandelilla(makeName("candelilla"));
 
         GameRegistry.registerBlock(sapling, ItemGTSapling.class, "sapling");
+
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, "thin_log");
-        GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, "thin_log_fence");
         if (Loader.isModLoaded("BiomesOPlenty")) {
             GameRegistry.registerBlock(thinLogBop, ItemThinLog.class, "bop_thin_log");
-            GameRegistry.registerBlock(thinLogFenceBop, ItemThinLogFence.class, "bop_thin_log_fence");
         }
         if (Loader.isModLoaded("Thaumcraft")) {
             GameRegistry.registerBlock(thinLogThaumcraft, ItemThinLog.class, "thaumcraft_thin_log");
+        }
+        if (Loader.isModLoaded("witchery")) {
+            GameRegistry.registerBlock(thinLogWitchery, ItemThinLog.class, "witchery_thin_log");
+        }
+        GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, "thin_log_fence");
+        if (Loader.isModLoaded("BiomesOPlenty")) {
+            GameRegistry.registerBlock(thinLogFenceBop, ItemThinLogFence.class, "bop_thin_log_fence");
+        }
+        if (Loader.isModLoaded("Thaumcraft")) {
             GameRegistry.registerBlock(thinLogFenceThaumcraft, ItemThinLogFence.class, "thaumcraft_thin_log_fence");
+        }
+        if (Loader.isModLoaded("witchery")) {
+            GameRegistry.registerBlock(thinLogFenceWitchery, ItemThinLogFence.class, "witchery_thin_log_fence");
         }
 
         // GameRegistry.registerBlock(flowerLeaves, "flower_leaves");

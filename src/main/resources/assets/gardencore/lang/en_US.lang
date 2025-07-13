@@ -212,4 +212,11 @@ tile.gardentrees.thaumcraft_silverwood_thin_log.name=Silverwood Wood Post
 tile.gardentrees.thaumcraft_greatwood_thin_log_fence.name=Greatwood Wood Post Fence
 tile.gardentrees.thaumcraft_silverwood_thin_log_fence.name=Silverwood Wood Post Fence
 
+tile.gardentrees.witchery_rowan_thin_log.name=Rowan Wood Post
+tile.gardentrees.witchery_alder_thin_log.name=Alder Wood Post
+tile.gardentrees.witchery_hawthorn_thin_log.name=Hawthorn Wood Post
+tile.gardentrees.witchery_rowan_thin_log_fence.name=Rowan Wood Post
+tile.gardentrees.witchery_alder_thin_log_fence.name=Alder Wood Post
+tile.gardentrees.witchery_hawthorn_thin_log_fence.name=Hawthorn Wood Post
+
 tile.gardentrees.candelilla.name=Candelilla

@@ -163,21 +163,18 @@ public class BlockThinLogFence extends Block {
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(int side, int meta) {
-        return getLogIconFromBlockMeta(side, meta % 4, meta);
-    }
+        int meta2 = meta % 4;
 
-    @SideOnly(Side.CLIENT)
-    public IIcon getLogIconFromBlockMeta(int side, int meta, int blockmeta) {
-        int k = meta & 12;
-        int i = meta & 3;
+        int k = meta2 & 12;
+        int i = meta2 & 3;
         int l = i;
-        if (blockmeta < 4) {
+        if (meta < 4) {
             l = i;
-        } else if (blockmeta < 8) {
+        } else if (meta < 8) {
             l = i + 4;
-        } else if (blockmeta < 12) {
+        } else if (meta < 12) {
             l = i + 8;
-        } else if (blockmeta < 16) {
+        } else if (meta < 16) {
             l = i + 12;
         }
         return k == 0 && (side == 1 || side == 0) ? tree_top[l]
@@ -212,6 +209,9 @@ public class BlockThinLogFence extends Block {
             } else if (modName.equals("thaumcraft")) {
                 tree[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "side");
                 tree_top[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "top");
+            } else if (modName.equals("witchery")) {
+                tree[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i]);
+                tree_top[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i] + "_top");
             }
         }
     }

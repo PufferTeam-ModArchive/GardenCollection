@@ -39,7 +39,7 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
 
     // Scratch state variable for rendering purposes
     // 0 = Y, 1 = Z, 2 = X, 3 = BARK
-    private int orientation;
+    int orientation;
 
     public BlockThinLog(String[] woods, String mod) {
         super(Material.wood);
@@ -274,6 +274,9 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
             } else if (modName.equals("thaumcraft")) {
                 tree[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "side");
                 tree_top[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "top");
+            } else if (modName.equals("witchery")) {
+                tree[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i]);
+                tree_top[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i] + "_top");
             }
         }
     }
@@ -281,26 +284,25 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(int side, int meta) {
+        int orient = orientation;
+
         int ometa = 0;
-        if (orientation == 1) ometa |= 8;
-        else if (orientation == 2) ometa |= 4;
-        else if (orientation == 3) ometa |= 12;
+        if (orient == 1) ometa |= 8;
+        else if (orient == 2) ometa |= 4;
+        else if (orient == 3) ometa |= 12;
 
-        return getLogIconFromBlockMeta(side, meta % 4 | ometa, meta);
-    }
+        int meta2 = meta % 4 | ometa;
 
-    @SideOnly(Side.CLIENT)
-    public IIcon getLogIconFromBlockMeta(int side, int meta, int blockmeta) {
-        int k = meta & 12;
-        int i = meta & 3;
+        int k = meta2 & 12;
+        int i = meta2 & 3;
         int l = i;
-        if (blockmeta < 4) {
+        if (meta < 4) {
             l = i;
-        } else if (blockmeta < 8) {
+        } else if (meta < 8) {
             l = i + 4;
-        } else if (blockmeta < 12) {
+        } else if (meta < 12) {
             l = i + 8;
-        } else if (blockmeta < 16) {
+        } else if (meta < 16) {
             l = i + 12;
         }
         return k == 0 && (side == 1 || side == 0) ? tree_top[l]

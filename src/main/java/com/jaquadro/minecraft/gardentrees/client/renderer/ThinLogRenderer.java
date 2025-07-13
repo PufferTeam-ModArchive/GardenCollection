@@ -104,8 +104,13 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler {
 
         if (connectY) {
             block.setOrientation(0);
-            if (connectYNeg && connectYPos) renderer.setRenderBounds(margin, 0, margin, 1 - margin, 1, 1 - margin);
-            else if (connectYNeg) renderer.setRenderBounds(margin, 0, margin, 1 - margin, margin, 1 - margin);
+            if (connectYNeg && connectYPos && !(connectXNeg && connectXPos))
+                renderer.setRenderBounds(margin, 0, margin, 1 - margin, 1, 1 - margin);
+            else if (connectYNeg && connectYPos && (connectXNeg && connectXPos)) {
+                renderer.setRenderBounds(margin, 0, margin, 1 - margin, 0.25, 1 - margin);
+                flag = renderer.renderStandardBlock(block, x, y, z);
+                renderer.setRenderBounds(margin, 0.75, margin, 1 - margin, 1, 1 - margin);
+            } else if (connectYNeg) renderer.setRenderBounds(margin, 0, margin, 1 - margin, margin, 1 - margin);
             else if (connectYPos) renderer.setRenderBounds(margin, 1 - margin, margin, 1 - margin, 1, 1 - margin);
             flag = renderer.renderStandardBlock(block, x, y, z);
         }
@@ -114,8 +119,13 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler {
             block.setOrientation(1);
             renderer.uvRotateSouth = 1;
             renderer.uvRotateNorth = 1;
-            if (connectZNeg && connectZPos) renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, 1);
-            else if (connectZNeg) renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, margin);
+            if (connectZNeg && connectZPos && !(connectYNeg && connectYPos))
+                renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, 1);
+            else if (connectZNeg && connectZPos && (connectYNeg && connectYPos)) {
+                renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, 0.25);
+                flag = renderer.renderStandardBlock(block, x, y, z);
+                renderer.setRenderBounds(margin, margin, 0.75, 1 - margin, 1 - margin, 1);
+            } else if (connectZNeg) renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, margin);
             else if (connectZPos) renderer.setRenderBounds(margin, margin, 1 - margin, 1 - margin, 1 - margin, 1);
             flag = renderer.renderStandardBlock(block, x, y, z);
         }
@@ -126,8 +136,13 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler {
             renderer.uvRotateWest = 1;
             renderer.uvRotateTop = 1;
             renderer.uvRotateBottom = 1;
-            if (connectXNeg && connectXPos) renderer.setRenderBounds(0, margin, margin, 1, 1 - margin, 1 - margin);
-            else if (connectXNeg) renderer.setRenderBounds(0, margin, margin, margin, 1 - margin, 1 - margin);
+            if (connectXNeg && connectXPos && !(connectZNeg && connectZPos))
+                renderer.setRenderBounds(0, margin, margin, 1, 1 - margin, 1 - margin);
+            else if (connectXNeg && connectXPos && (connectZNeg && connectZPos)) {
+                renderer.setRenderBounds(0, margin, margin, 0.25, 1 - margin, 1 - margin);
+                flag = renderer.renderStandardBlock(block, x, y, z);
+                renderer.setRenderBounds(0.75, margin, margin, 1, 1 - margin, 1 - margin);
+            } else if (connectXNeg) renderer.setRenderBounds(0, margin, margin, margin, 1 - margin, 1 - margin);
             else if (connectXPos) renderer.setRenderBounds(1 - margin, margin, margin, 1, 1 - margin, 1 - margin);
             flag = renderer.renderStandardBlock(block, x, y, z);
         }

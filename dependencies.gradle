@@ -41,6 +41,7 @@ dependencies {
     api files('libs/CraftTweaker-1.7.10-3.1.0-legacy-deobf.jar')
     api files("libs/BiomesOPlenty-1.7.10-2.1.0.2308-universal.jar")
     compileOnly files("libs/plantmegapack-4.15-1.7.10-1230.jar")
+    runtimeOnlyNonPublishable('com.github.GTNewHorizons:waila:1.8.10:dev') {transitive=false}
     api files("libs/AgriCraft-1.7.10-1.5.0-api.jar")
     api("com.github.GTNewHorizons:CodeChickenCore:1.4.0:dev")
     api('com.github.GTNewHorizons:CodeChickenLib:1.2.1:dev') {

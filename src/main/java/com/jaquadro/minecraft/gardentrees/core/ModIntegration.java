@@ -10,11 +10,11 @@ public class ModIntegration {
 
     public void postInit() {
         GardenCoreIntegration.init();
-        NaturaIntegration.init();
-        TwilightForestIntegration.init();
-        ThaumcraftIntegration.init();
-        ExtraBiomesXLIntegration.init();
-        TinkersConstructIntegration.init();
-        WitcheryIntegration.init();
+        // NaturaIntegration.init();
+        // TwilightForestIntegration.init();
+        // ThaumcraftIntegration.init();
+        // ExtraBiomesXLIntegration.init();
+        // TinkersConstructIntegration.init();
+        // WitcheryIntegration.init();
     }
 }

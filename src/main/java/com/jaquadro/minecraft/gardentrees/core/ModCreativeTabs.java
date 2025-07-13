@@ -15,7 +15,7 @@ public class ModCreativeTabs {
         @Override
         @SideOnly(Side.CLIENT)
         public Item getTabIconItem() {
-            return Item.getItemFromBlock(ModBlocks.thinLogFence);
+            return Item.getItemFromBlock(ModBlocks.thinLog);
         }
     };
 }

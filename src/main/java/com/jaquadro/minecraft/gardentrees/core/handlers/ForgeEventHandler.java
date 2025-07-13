@@ -3,11 +3,11 @@ package com.jaquadro.minecraft.gardentrees.core.handlers;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.oredict.OreDictionary;
 
 import com.jaquadro.minecraft.gardencore.api.SaplingRegistry;
 import com.jaquadro.minecraft.gardencore.api.event.EnrichedSoilEvent;
 import com.jaquadro.minecraft.gardentrees.GardenTrees;
-import com.jaquadro.minecraft.gardentrees.core.recipe.WoodPostRecipe;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLog;
 
 import cpw.mods.fml.common.eventhandler.Event;
@@ -55,11 +55,16 @@ public class ForgeEventHandler {
     }
 
     private boolean isValidAxe(ItemStack itemStack) {
-        Item item = itemStack.getItem();
-        for (int i = 0, n = WoodPostRecipe.axeList.size(); i < n; i++) {
-            if (item == WoodPostRecipe.axeList.get(i)) return true;
-        }
+        return containsOreDict(itemStack, "toolAxe");
+    }
 
-        return false;
+    public static boolean containsOreDict(ItemStack b, String oreDict) {
+        boolean isWood = false;
+        for (int id1 : OreDictionary.getOreIDs(b)) {
+            if (id1 == OreDictionary.getOreID(oreDict)) {
+                isWood = true;
+            }
+        }
+        return isWood;
     }
 }

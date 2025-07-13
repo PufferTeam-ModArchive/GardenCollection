@@ -4,16 +4,17 @@ import net.minecraft.block.Block;
 
 import org.apache.logging.log4j.Level;
 
+import com.jaquadro.minecraft.gardencore.Constants;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardentrees.GardenTrees;
 import com.jaquadro.minecraft.gardentrees.block.*;
-import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import com.jaquadro.minecraft.gardentrees.item.ItemGTSapling;
 import com.jaquadro.minecraft.gardentrees.item.ItemIvy;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLog;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLogFence;
 
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -21,6 +22,10 @@ public class ModBlocks {
 
     public static BlockThinLog thinLog;
     public static BlockThinLogFence thinLogFence;
+    public static BlockThinLog thinLogBop;
+    public static BlockThinLogFence thinLogFenceBop;
+    public static BlockThinLog thinLogThaumcraft;
+    public static BlockThinLogFence thinLogFenceThaumcraft;
     public static BlockFlowerLeaves flowerLeaves;
     public static BlockGTSapling sapling;
     public static BlockIvy ivy;
@@ -28,8 +33,12 @@ public class ModBlocks {
     public static BlockCandelilla candelilla;
 
     public void init() {
-        thinLog = new BlockThinLog(makeName("thinLog"));
-        thinLogFence = new BlockThinLogFence(makeName("thinLogFence"));
+        thinLog = new BlockThinLog(Constants.woodTypes, "vanilla");
+        thinLogFence = new BlockThinLogFence(Constants.woodTypes, "vanilla");
+        thinLogBop = new BlockThinLog(Constants.bopWoodTypes, "bop");
+        thinLogFenceBop = new BlockThinLogFence(Constants.bopWoodTypes, "bop");
+        thinLogThaumcraft = new BlockThinLog(Constants.thaumcraftWoodTypes, "thaumcraft");
+        thinLogFenceThaumcraft = new BlockThinLogFence(Constants.thaumcraftWoodTypes, "thaumcraft");
         flowerLeaves = new BlockFlowerLeaves(makeName("flowerLeaves"));
         sapling = new BlockGTSapling(makeName("sapling"));
         ivy = new BlockIvy(makeName("ivy"));
@@ -39,12 +48,21 @@ public class ModBlocks {
         GameRegistry.registerBlock(sapling, ItemGTSapling.class, "sapling");
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, "thin_log");
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, "thin_log_fence");
+        if (Loader.isModLoaded("BiomesOPlenty")) {
+            GameRegistry.registerBlock(thinLogBop, ItemThinLog.class, "bop_thin_log");
+            GameRegistry.registerBlock(thinLogFenceBop, ItemThinLogFence.class, "bop_thin_log_fence");
+        }
+        if (Loader.isModLoaded("Thaumcraft")) {
+            GameRegistry.registerBlock(thinLogThaumcraft, ItemThinLog.class, "thaumcraft_thin_log");
+            GameRegistry.registerBlock(thinLogFenceThaumcraft, ItemThinLogFence.class, "thaumcraft_thin_log_fence");
+        }
+
         // GameRegistry.registerBlock(flowerLeaves, "flower_leaves");
         GameRegistry.registerBlock(ivy, ItemIvy.class, "ivy");
         GameRegistry.registerBlock(strangePlant, "strange_plant");
         GameRegistry.registerBlock(candelilla, "candelilla_bush");
 
-        GameRegistry.registerTileEntity(TileEntityWoodProxy.class, ModBlocks.getQualifiedName(thinLog));
+        // GameRegistry.registerTileEntity(TileEntityWoodProxy.class, ModBlocks.getQualifiedName(thinLog));
     }
 
     public static String makeName(String name) {

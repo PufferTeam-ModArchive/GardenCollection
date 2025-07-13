@@ -3,12 +3,9 @@ package com.jaquadro.minecraft.gardentrees.world.gen;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
-import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
-import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
 
 public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree {
@@ -198,17 +195,19 @@ public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree {
     private void generateBlock(World world, int x, int y, int z, Block block, int meta) {
         Block existingBlock = world.getBlock(x, y, z);
         if (existingBlock.isAir(world, x, y, z) || existingBlock.isLeaves(world, x, y, z)) {
-            if (block == Blocks.log) setBlockAndNotifyAdequately(world, x, y, z, ModBlocks.thinLog, meta % 4);
-            else if (block == Blocks.log2) setBlockAndNotifyAdequately(world, x, y, z, ModBlocks.thinLog, meta % 4 + 4);
-            else if (WoodRegistry.instance()
-                .contains(block, meta)) {
-                    setBlockAndNotifyAdequately(world, x, y, z, block, 0);
-                    TileEntityWoodProxy te = new TileEntityWoodProxy();
-                    te.setProtoBlock(block, meta);
-
-                    setBlockAndNotifyAdequately(world, x, y, z, ModBlocks.thinLog, 0);
-                    world.setTileEntity(x, y, z, te);
-                } else setBlockAndNotifyAdequately(world, x, y, z, block, meta);
+            int blockmeta = world.getBlockMetadata(x, y, z);
+            int i = meta;
+            int l = i;
+            if (blockmeta < 4) {
+                l = i;
+            } else if (blockmeta < 8) {
+                l = i + 4;
+            } else if (blockmeta < 12) {
+                l = i + 8;
+            } else if (blockmeta < 16) {
+                l = i + 12;
+            }
+            setBlockAndNotifyAdequately(world, x, y, z, ModBlocks.thinLog, meta % 4 + l);
         }
     }
 

@@ -25,6 +25,7 @@ public class BlockThinLogFence extends Block {
 
     String[] woodNames;
     String modName;
+    boolean woodStripped;
 
     @SideOnly(Side.CLIENT)
     private IIcon[] tree;
@@ -34,7 +35,7 @@ public class BlockThinLogFence extends Block {
 
     IIcon sideIcon;
 
-    public BlockThinLogFence(String[] woods, String mod) {
+    public BlockThinLogFence(String[] woods, String mod, boolean stripped) {
         super(Material.wood);
 
         setCreativeTab(ModCreativeTabs.tabGardenTrees);
@@ -45,6 +46,7 @@ public class BlockThinLogFence extends Block {
 
         woodNames = woods;
         modName = mod;
+        woodStripped = stripped;
 
         setBlockBoundsForItemRender();
     }
@@ -200,18 +202,29 @@ public class BlockThinLogFence extends Block {
         tree = new IIcon[woodNames.length];
         tree_top = new IIcon[woodNames.length];
         for (int i = 0; i < woodNames.length; i++) {
-            if (modName.equals("vanilla")) {
-                tree[i] = iconRegister.registerIcon("minecraft:log_" + woodNames[i]);
-                tree_top[i] = iconRegister.registerIcon("minecraft:log_" + woodNames[i] + "_top");
-            } else if (modName.equals("bop")) {
-                tree[i] = iconRegister.registerIcon("biomesoplenty:log_" + woodNames[i] + "_side");
-                tree_top[i] = iconRegister.registerIcon("biomesoplenty:log_" + woodNames[i] + "_heart");
-            } else if (modName.equals("thaumcraft")) {
-                tree[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "side");
-                tree_top[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "top");
-            } else if (modName.equals("witchery")) {
-                tree[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i]);
-                tree_top[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i] + "_top");
+            if (!woodStripped) {
+                if (modName.equals("vanilla")) {
+                    tree[i] = iconRegister.registerIcon("minecraft:log_" + woodNames[i]);
+                    tree_top[i] = iconRegister.registerIcon("minecraft:log_" + woodNames[i] + "_top");
+                } else if (modName.equals("bop")) {
+                    tree[i] = iconRegister.registerIcon("biomesoplenty:log_" + woodNames[i] + "_side");
+                    tree_top[i] = iconRegister.registerIcon("biomesoplenty:log_" + woodNames[i] + "_heart");
+                } else if (modName.equals("thaumcraft")) {
+                    tree[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "side");
+                    tree_top[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "top");
+                } else if (modName.equals("witchery")) {
+                    tree[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i]);
+                    tree_top[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i] + "_top");
+                }
+            } else {
+                String actualModName = modName;
+                if (modName.equals("vanilla")) {
+                    actualModName = "minecraft";
+                } else if (modName.equals("bop")) {
+                    actualModName = "biomesoplenty";
+                }
+                tree[i] = iconRegister.registerIcon(actualModName + ":stripped_" + woodNames[i] + "_log");
+                tree_top[i] = iconRegister.registerIcon(actualModName + ":stripped_" + woodNames[i] + "_log_top");
             }
         }
     }
@@ -222,5 +235,9 @@ public class BlockThinLogFence extends Block {
 
     public String getMod() {
         return modName;
+    }
+
+    public boolean isStripped() {
+        return woodStripped;
     }
 }

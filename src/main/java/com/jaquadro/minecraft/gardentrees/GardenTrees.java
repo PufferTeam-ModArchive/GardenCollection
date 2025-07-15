@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.minecraftforge.common.MinecraftForge;
 
+import com.jaquadro.minecraft.gardencore.api.StrippedThinLogRegistry;
 import com.jaquadro.minecraft.gardenstuff.Tags;
 import com.jaquadro.minecraft.gardentrees.config.ConfigManager;
 import com.jaquadro.minecraft.gardentrees.core.*;
@@ -12,6 +13,7 @@ import com.jaquadro.minecraft.gardentrees.core.handlers.FuelHandler;
 import com.jaquadro.minecraft.gardentrees.world.gen.feature.WorldGenCandelilla;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -35,6 +37,7 @@ public class GardenTrees {
     public static final ModBlocks blocks = new ModBlocks();
     public static final ModItems items = new ModItems();
     public static final ModRecipes recipes = new ModRecipes();
+    public static final StrippedThinLogRegistry stripping = new StrippedThinLogRegistry();
 
     public static ConfigManager config;
 
@@ -56,6 +59,9 @@ public class GardenTrees {
     public void init(FMLInitializationEvent event) {
         proxy.registerRenderers();
         integration.init();
+        if (Loader.isModLoaded("etfuturum")) {
+            stripping.init();
+        }
 
         MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
         FMLCommonHandler.instance()

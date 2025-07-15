@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -30,6 +29,7 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
 
     String[] woodNames;
     String modName;
+    boolean woodStripped;
 
     @SideOnly(Side.CLIENT)
     private IIcon[] tree;
@@ -41,7 +41,7 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
     // 0 = Y, 1 = Z, 2 = X, 3 = BARK
     int orientation;
 
-    public BlockThinLog(String[] woods, String mod) {
+    public BlockThinLog(String[] woods, String mod, boolean stripped) {
         super(Material.wood);
 
         setCreativeTab(ModCreativeTabs.tabGardenTrees);
@@ -52,6 +52,7 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
 
         woodNames = woods;
         modName = mod;
+        woodStripped = stripped;
 
         setBlockBoundsForItemRender();
     }
@@ -190,13 +191,17 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
         boolean hardConnectionXPos = hardConnection && (flagsXPos & 4) != 0;
 
         boolean connectZNeg = (connectFlagsY == 0 && hardZNeg)
-            || (blockZNeg == this && !hardConnectionZNeg && (connectFlagsY != 3 || connectFlagsZNeg != 3));
+            || (blockZNeg instanceof BlockThinLog && !hardConnectionZNeg
+                && (connectFlagsY != 3 || connectFlagsZNeg != 3));
         boolean connectZPos = (connectFlagsY == 0 && hardZPos)
-            || (blockZPos == this && !hardConnectionZPos && (connectFlagsY != 3 || connectFlagsZPos != 3));
+            || (blockZPos instanceof BlockThinLog && !hardConnectionZPos
+                && (connectFlagsY != 3 || connectFlagsZPos != 3));
         boolean connectXNeg = (connectFlagsY == 0 && hardXNeg)
-            || (blockXNeg == this && !hardConnectionXNeg && (connectFlagsY != 3 || connectFlagsXNeg != 3));
+            || (blockXNeg instanceof BlockThinLog && !hardConnectionXNeg
+                && (connectFlagsY != 3 || connectFlagsXNeg != 3));
         boolean connectXPos = (connectFlagsY == 0 && hardXPos)
-            || (blockXPos == this && !hardConnectionXPos && (connectFlagsY != 3 || connectFlagsXPos != 3));
+            || (blockXPos instanceof BlockThinLog && !hardConnectionXPos
+                && (connectFlagsY != 3 || connectFlagsXPos != 3));
 
         boolean connectSide = connectZNeg | connectZPos | connectXNeg | connectXPos;
         if (!connectSide && (connectFlagsY & 1) == 0) {
@@ -221,15 +226,15 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
 
     private int calcConnectYFlags(IBlockAccess world, int x, int y, int z) {
         Block block = world.getBlock(x, y, z);
-        if (block != this) return 0;
+        if (!(block instanceof BlockThinLog)) return 0;
 
         Block blockYNeg = world.getBlock(x, y - 1, z);
         boolean hardYNeg = isNeighborHardConnectionY(world, x, y - 1, z, blockYNeg, ForgeDirection.DOWN);
-        boolean connectYNeg = hardYNeg || blockYNeg == this;
+        boolean connectYNeg = hardYNeg || blockYNeg instanceof BlockThinLog;
 
         Block blockYPos = world.getBlock(x, y + 1, z);
         boolean hardYPos = isNeighborHardConnectionY(world, x, y + 1, z, blockYPos, ForgeDirection.UP);
-        boolean connectYPos = hardYPos || blockYPos == this || blockYPos instanceof BlockTorch;
+        boolean connectYPos = hardYPos || blockYPos instanceof BlockThinLog || blockYPos instanceof BlockTorch;
 
         return (connectYNeg ? 1 : 0) | (connectYPos ? 2 : 0) | (hardYNeg ? 4 : 0) | (hardYPos ? 8 : 0);
     }
@@ -240,7 +245,6 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
             .isOpaque() && block.renderAsNormalBlock()) return true;
 
         if (block.isSideSolid(world, x, y, z, side.getOpposite())) return true;
-
         // if (block == ModBlocks.largePot)
         // return true;
         return false;
@@ -250,7 +254,7 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
         ForgeDirection side) {
         if (isNeighborHardConnection(world, x, y, z, block, side)) return true;
 
-        return block instanceof BlockLeavesBase || block instanceof BlockThinLogFence;
+        return block instanceof BlockThinLogFence;
     }
 
     @Override
@@ -265,18 +269,29 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
         tree = new IIcon[woodNames.length];
         tree_top = new IIcon[woodNames.length];
         for (int i = 0; i < woodNames.length; i++) {
-            if (modName.equals("vanilla")) {
-                tree[i] = iconRegister.registerIcon("minecraft:log_" + woodNames[i]);
-                tree_top[i] = iconRegister.registerIcon("minecraft:log_" + woodNames[i] + "_top");
-            } else if (modName.equals("bop")) {
-                tree[i] = iconRegister.registerIcon("biomesoplenty:log_" + woodNames[i] + "_side");
-                tree_top[i] = iconRegister.registerIcon("biomesoplenty:log_" + woodNames[i] + "_heart");
-            } else if (modName.equals("thaumcraft")) {
-                tree[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "side");
-                tree_top[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "top");
-            } else if (modName.equals("witchery")) {
-                tree[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i]);
-                tree_top[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i] + "_top");
+            if (!woodStripped) {
+                if (modName.equals("vanilla")) {
+                    tree[i] = iconRegister.registerIcon("minecraft:log_" + woodNames[i]);
+                    tree_top[i] = iconRegister.registerIcon("minecraft:log_" + woodNames[i] + "_top");
+                } else if (modName.equals("bop")) {
+                    tree[i] = iconRegister.registerIcon("biomesoplenty:log_" + woodNames[i] + "_side");
+                    tree_top[i] = iconRegister.registerIcon("biomesoplenty:log_" + woodNames[i] + "_heart");
+                } else if (modName.equals("thaumcraft")) {
+                    tree[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "side");
+                    tree_top[i] = iconRegister.registerIcon("thaumcraft:" + woodNames[i] + "top");
+                } else if (modName.equals("witchery")) {
+                    tree[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i]);
+                    tree_top[i] = iconRegister.registerIcon("witchery:log_" + woodNames[i] + "_top");
+                }
+            } else {
+                String actualModName = modName;
+                if (modName.equals("vanilla")) {
+                    actualModName = "minecraft";
+                } else if (modName.equals("bop")) {
+                    actualModName = "biomesoplenty";
+                }
+                tree[i] = iconRegister.registerIcon(actualModName + ":stripped_" + woodNames[i] + "_log");
+                tree_top[i] = iconRegister.registerIcon(actualModName + ":stripped_" + woodNames[i] + "_log_top");
             }
         }
     }
@@ -316,6 +331,10 @@ public class BlockThinLog extends Block implements IChainSingleAttachable {
 
     public String getMod() {
         return modName;
+    }
+
+    public boolean isStripped() {
+        return woodStripped;
     }
 
     @Override

@@ -177,6 +177,20 @@ tile.gardentrees.jungle_thin_log_fence.name=Jungle Wood Post Fence
 tile.gardentrees.acacia_thin_log_fence.name=Acacia Wood Post Fence
 tile.gardentrees.big_oak_thin_log_fence.name=Dark Oak Wood Post Fence
 
+tile.gardentrees.stripped_oak_thin_log.name=Stripped Oak Wood Post
+tile.gardentrees.stripped_spruce_thin_log.name=Stripped Spruce Wood Post
+tile.gardentrees.stripped_birch_thin_log.name=Stripped Birch Wood Post
+tile.gardentrees.stripped_jungle_thin_log.name=Stripped Jungle Wood Post
+tile.gardentrees.stripped_acacia_thin_log.name=Stripped Acacia Wood Post
+tile.gardentrees.stripped_dark_oak_thin_log.name=Stripped Dark Oak Wood Post
+
+tile.gardentrees.stripped_oak_thin_log_fence.name=Stripped Oak Wood Post Fence
+tile.gardentrees.stripped_spruce_thin_log_fence.name=Stripped Spruce Wood Post Fence
+tile.gardentrees.stripped_birch_thin_log_fence.name=Stripped Birch Wood Post Fence
+tile.gardentrees.stripped_jungle_thin_log_fence.name=Stripped Jungle Wood Post Fence
+tile.gardentrees.stripped_acacia_thin_log_fence.name=Stripped Acacia Wood Post Fence
+tile.gardentrees.stripped_dark_oak_thin_log_fence.name=Stripped Dark Oak Wood Post Fence
+
 tile.gardentrees.bop_sacredoak_thin_log.name=Sacred Oak Wood Post
 tile.gardentrees.bop_cherry_thin_log.name=Cherry Wood Post
 tile.gardentrees.bop_dark_thin_log.name=Dark Wood Post
@@ -207,10 +221,45 @@ tile.gardentrees.bop_hellbark_thin_log_fence.name=Hellbark Wood Post Fence
 tile.gardentrees.bop_jacaranda_thin_log_fence.name=Jacaranda Wood Post Fence
 tile.gardentrees.bop_mahogany_thin_log_fence.name=Mahogany Wood Post Fence
 
+tile.gardentrees.bop_stripped_sacredoak_thin_log.name=Stripped Sacred Oak Wood Post
+tile.gardentrees.bop_stripped_cherry_thin_log.name=Stripped Cherry Wood Post
+tile.gardentrees.bop_stripped_dark_thin_log.name=Stripped Dark Wood Post
+tile.gardentrees.bop_stripped_fir_thin_log.name=Stripped Fir Wood Post
+tile.gardentrees.bop_stripped_ethereal_thin_log.name=Stripped Ethereal Wood Post
+tile.gardentrees.bop_stripped_magic_thin_log.name=Stripped Magic Wood Post
+tile.gardentrees.bop_stripped_mangrove_thin_log.name=Stripped Mangrove Wood Post
+tile.gardentrees.bop_stripped_palm_thin_log.name=Stripped Palm Wood Post
+tile.gardentrees.bop_stripped_redwood_thin_log.name=Stripped Redwood Wood Post
+tile.gardentrees.bop_stripped_willow_thin_log.name=Stripped Willow Wood Post
+tile.gardentrees.bop_stripped_pine_thin_log.name=Stripped Pine Wood Post
+tile.gardentrees.bop_stripped_hellbark_thin_log.name=Stripped Hellbark Wood Post
+tile.gardentrees.bop_stripped_jacaranda_thin_log.name=Stripped Jacaranda Wood Post
+tile.gardentrees.bop_stripped_mahogany_thin_log.name=Stripped Mahogany Wood Post
+
+tile.gardentrees.bop_stripped_sacredoak_thin_log_fence.name=Stripped Sacred Oak Wood Post Fence
+tile.gardentrees.bop_stripped_cherry_thin_log_fence.name=Stripped Cherry Wood Post Fence
+tile.gardentrees.bop_stripped_dark_thin_log_fence.name=Stripped Dark Wood Post Fence
+tile.gardentrees.bop_stripped_fir_thin_log_fence.name=Stripped Fir Wood Post Fence
+tile.gardentrees.bop_stripped_ethereal_thin_log_fence.name=Stripped Ethereal Wood Post Fence
+tile.gardentrees.bop_stripped_magic_thin_log_fence.name=Stripped Magic Wood Post Fence
+tile.gardentrees.bop_stripped_mangrove_thin_log_fence.name=Stripped Mangrove Wood Post Fence
+tile.gardentrees.bop_stripped_palm_thin_log_fence.name=Stripped Palm Wood Post Fence
+tile.gardentrees.bop_stripped_redwood_thin_log_fence.name=Stripped Redwood Wood Post Fence
+tile.gardentrees.bop_stripped_willow_thin_log_fence.name=Stripped Willow Wood Post Fence
+tile.gardentrees.bop_stripped_pine_thin_log_fence.name=Stripped Pine Wood Post Fence
+tile.gardentrees.bop_stripped_hellbark_thin_log_fence.name=Stripped Hellbark Wood Post Fence
+tile.gardentrees.bop_stripped_jacaranda_thin_log_fence.name=Stripped Jacaranda Wood Post Fence
+tile.gardentrees.bop_stripped_mahogany_thin_log_fence.name=Stripped Mahogany Wood Post Fence
+
 tile.gardentrees.thaumcraft_greatwood_thin_log.name=Greatwood Wood Post
 tile.gardentrees.thaumcraft_silverwood_thin_log.name=Silverwood Wood Post
 tile.gardentrees.thaumcraft_greatwood_thin_log_fence.name=Greatwood Wood Post Fence
 tile.gardentrees.thaumcraft_silverwood_thin_log_fence.name=Silverwood Wood Post Fence
+
+tile.gardentrees.thaumcraft_stripped_greatwood_thin_log.name=Stripped Greatwood Wood Post
+tile.gardentrees.thaumcraft_stripped_silverwood_thin_log.name=Stripped Silverwood Wood Post
+tile.gardentrees.thaumcraft_stripped_greatwood_thin_log_fence.name=Stripped Greatwood Wood Post Fence
+tile.gardentrees.thaumcraft_stripped_silverwood_thin_log_fence.name=Stripped Silverwood Wood Post Fence
 
 tile.gardentrees.witchery_rowan_thin_log.name=Rowan Wood Post
 tile.gardentrees.witchery_alder_thin_log.name=Alder Wood Post

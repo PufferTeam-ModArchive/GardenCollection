@@ -10,6 +10,7 @@ public class ItemThinLogFence extends ItemBlock {
 
     String[] woodNames;
     String modName;
+    String prefix;
 
     public ItemThinLogFence(Block block) {
         super(block);
@@ -17,6 +18,11 @@ public class ItemThinLogFence extends ItemBlock {
 
         woodNames = ((BlockThinLogFence) block).getWoods();
         modName = ((BlockThinLogFence) block).getMod();
+        if (((BlockThinLogFence) block).isStripped()) {
+            prefix = "stripped_";
+        } else {
+            prefix = "";
+        }
     }
 
     @Override
@@ -25,9 +31,9 @@ public class ItemThinLogFence extends ItemBlock {
         if (meta < 0 || meta >= woodNames.length) return super.getUnlocalizedName();
 
         if (modName.equals("vanilla")) {
-            return "tile.gardentrees." + woodNames[meta] + "_thin_log_fence";
+            return "tile.gardentrees." + prefix + woodNames[meta] + "_thin_log_fence";
         }
-        return "tile.gardentrees." + modName + "_" + woodNames[meta] + "_thin_log_fence";
+        return "tile.gardentrees." + modName + "_" + prefix + woodNames[meta] + "_thin_log_fence";
     }
 
     @Override

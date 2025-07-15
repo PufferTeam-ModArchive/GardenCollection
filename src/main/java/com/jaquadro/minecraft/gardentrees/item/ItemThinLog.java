@@ -10,6 +10,7 @@ public class ItemThinLog extends ItemBlock {
 
     String[] woodNames;
     String modName;
+    String prefix;
 
     public ItemThinLog(Block block) {
         super(block);
@@ -17,6 +18,11 @@ public class ItemThinLog extends ItemBlock {
 
         woodNames = ((BlockThinLog) block).getWoods();
         modName = ((BlockThinLog) block).getMod();
+        if (((BlockThinLog) block).isStripped()) {
+            prefix = "stripped_";
+        } else {
+            prefix = "";
+        }
     }
 
     @Override
@@ -25,9 +31,9 @@ public class ItemThinLog extends ItemBlock {
         if (meta < 0 || meta >= woodNames.length) return super.getUnlocalizedName();
 
         if (modName.equals("vanilla")) {
-            return "tile.gardentrees." + woodNames[meta] + "_thin_log";
+            return "tile.gardentrees." + prefix + woodNames[meta] + "_thin_log";
         }
-        return "tile.gardentrees." + modName + "_" + woodNames[meta] + "_thin_log";
+        return "tile.gardentrees." + modName + "_" + prefix + woodNames[meta] + "_thin_log";
     }
 
     @Override
